@@ -8,7 +8,7 @@ gsap.registerPlugin(ScrollTrigger)
 
 /** Film controls and document links use the same scroll owner as the wheel. */
 export function seekPage(top: number) {
-  window.dispatchEvent(new CustomEvent('vold:seek', { detail: top }))
+  window.dispatchEvent(new CustomEvent('focz:seek', { detail: top }))
 }
 
 export function useReducedMotion() {
@@ -36,7 +36,7 @@ export function useExperience(root: RefObject<HTMLElement | null>, reduced: bool
     const context = gsap.context(() => {
       if (!reduced) {
         gsap.utils.toArray<HTMLElement>('[data-reveal]').forEach(element => {
-          gsap.from(element, { y: 36, opacity: 0, duration: 0.8, ease: 'power2.out', scrollTrigger: { trigger: element, start: 'top 94%', once: true } })
+          gsap.from(element, { y: 18, opacity: 0, duration: 0.55, ease: 'power2.out', scrollTrigger: { trigger: element, start: 'top 94%', once: true } })
         })
       }
     }, root)
@@ -44,7 +44,7 @@ export function useExperience(root: RefObject<HTMLElement | null>, reduced: bool
     const seek = (event: Event) => {
       const top = (event as CustomEvent<number>).detail
       if (!Number.isFinite(top)) return
-      if (lenis) lenis.scrollTo(top, { immediate: true, force: true })
+      if (lenis) { lenis.resize(); lenis.scrollTo(top, { immediate: true, force: true }) }
       else window.scrollTo({ top, behavior: 'instant' })
     }
     const anchor = (event: MouseEvent) => {
@@ -59,18 +59,24 @@ export function useExperience(root: RefObject<HTMLElement | null>, reduced: bool
         if (!target.hasAttribute('tabindex')) { target.setAttribute('tabindex', '-1'); target.addEventListener('blur', () => target.removeAttribute('tabindex'), { once: true }) }
         target.focus({ preventScroll: true })
       }
-      if (lenis) lenis.scrollTo(target, { offset: -24, duration: .9, onComplete: focus })
+      if (lenis) {
+        // Native focus and viewport resizing can move the page before Lenis catches up.
+        const top = target.getBoundingClientRect().top + window.scrollY - 24
+        lenis.resize()
+        lenis.scrollTo(window.scrollY, { immediate: true, force: true })
+        lenis.scrollTo(top, { duration: .9, onComplete: focus })
+      }
       else { target.scrollIntoView({ behavior: 'instant' }); focus() }
     }
     document.fonts.ready.then(() => { if (active) refresh() })
     let active = true
     window.addEventListener('load', refresh)
-    window.addEventListener('vold:seek', seek)
+    window.addEventListener('focz:seek', seek)
     document.addEventListener('click', anchor)
     return () => {
       active = false
       window.removeEventListener('load', refresh)
-      window.removeEventListener('vold:seek', seek)
+      window.removeEventListener('focz:seek', seek)
       document.removeEventListener('click', anchor)
       context.revert()
       gsap.ticker.remove(tick)

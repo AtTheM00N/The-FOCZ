@@ -1,0 +1,14 @@
+.film-wordmark { position: relative; display: inline-block; pointer-events: auto; padding: 12px 8px 24px; border: 0; background: none; touch-action: pan-y pinch-zoom; -webkit-tap-highlight-color: transparent; }
+.film-wordmark:disabled { pointer-events: none; }
+.liquid-wordmark-text { position: relative; }
+.liquid-wordmark-glass,.liquid-wordmark-ripple { position: absolute; left: 0; top: 0; border-radius: 50%; opacity: 0; pointer-events: none; }
+.liquid-wordmark-glass { border: 1px solid rgba(233,234,233,.14); background: radial-gradient(ellipse at 28% 18%,rgba(255,255,255,.075),transparent 48%),linear-gradient(145deg,rgba(233,234,233,.018),transparent 55%); box-shadow: inset 0 1px 2px rgba(255,255,255,.16),inset 0 -1px 2px rgba(255,255,255,.04); }
+.liquid-wordmark-glass::after { content: ''; position: absolute; inset: 3px; border-radius: inherit; border-top: 1px solid rgba(255,255,255,.18); mask-image: linear-gradient(100deg,transparent 20%,#000 45%,transparent 70%); }
+.liquid-wordmark-ripple { border: 1px solid rgba(233,234,233,.24); }
+.liquid-wordmark-defs { position: absolute; pointer-events: none; overflow: hidden; }
+@media (max-width:759px) { .film-wordmark { padding: 12px 0 20px; } }
+@media (prefers-reduced-motion:reduce) {
+  .liquid-wordmark-text { filter: none !important; }
+  .liquid-wordmark-glass,.liquid-wordmark-ripple { display: none; }
+  .film-wordmark:hover .wordmark,.film-wordmark:focus-visible .wordmark { color: #fff; }
+}

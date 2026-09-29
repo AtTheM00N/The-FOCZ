@@ -1,0 +1,29 @@
+.world-section { border-top: 1px solid var(--line); }
+.world-section.section-pad { padding-block: clamp(3rem,7vw,6.25rem); }
+.world-shell { container: focz-world / inline-size; max-inline-size: 76rem; min-inline-size: 0; margin-inline: auto; }
+.world-shell .section-top { flex-wrap: wrap; gap: .5rem 2rem; margin-block-end: clamp(2rem,5cqi,4rem); }
+.world-heading { margin-block-end: clamp(2rem,4cqi,3rem); }
+
+/* Intrinsic image dimensions reserve space before loading. The 3:4 column
+   weights keep the 360px and 480px source images at the same visual height. */
+.world-grid { --gallery-gap: clamp(1.5rem,3cqi,2.5rem); display: grid; grid-template-columns: minmax(0,1fr); gap: clamp(2rem,6cqi,4rem); max-inline-size: 24rem; margin-inline: auto; align-items: start; }
+.world-card { display: block; min-inline-size: 0; }
+.world-figure { margin: 0; }
+.world-image { position: relative; overflow: hidden; background: #141617; }
+.world-image img { display: block; inline-size: 100%; block-size: auto; filter: grayscale(1) brightness(.92); transition: transform .7s cubic-bezier(.22,1,.36,1),filter .7s; }
+.world-card:hover img,.world-card:focus-visible img { transform: scale(1.018); filter: grayscale(1) brightness(1); }
+.world-caption { display: flex; align-items: center; justify-content: space-between; gap: 1rem; min-block-size: 2.75rem; padding-block-start: .75rem; }
+.world-caption h3 { min-inline-size: 0; font-size: clamp(1.125rem,2cqi,1.375rem); line-height: 1.3; letter-spacing: -.03em; font-weight: 450; }
+.world-caption-meta { display: flex; flex-shrink: 0; align-items: center; gap: clamp(.75rem,2cqi,1.25rem); color: var(--muted); }
+.world-caption-meta svg { width: 18px; transition: translate .3s,color .3s; }
+.world-card:hover .world-caption-meta svg,.world-card:focus-visible .world-caption-meta svg { translate: 2px -2px; color: var(--bone); }
+
+/* Arrange only when the section itself has room, including at browser zoom. */
+@container focz-world (min-width:36rem) {
+  .world-grid { grid-template-columns: minmax(0,3fr) minmax(0,4fr); max-inline-size: 48rem; column-gap: var(--gallery-gap); }
+  .world-card-terrain { grid-column: 1 / -1; inline-size: calc((100% - var(--gallery-gap)) * 4 / 7); justify-self: center; }
+}
+@container focz-world (min-width:60rem) {
+  .world-grid { grid-template-columns: minmax(0,3fr) minmax(0,4fr) minmax(0,4fr); max-inline-size: none; }
+  .world-card-terrain { grid-column: auto; inline-size: auto; justify-self: stretch; }
+}

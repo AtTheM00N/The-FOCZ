@@ -1,16 +1,16 @@
 export const SHOTS = [
-  { at: 0, name: 'A hairline in the dark', time: '00:00', cue: 'Enter the dark.' },
-  { at: .06, name: 'The crown', time: '00:04', cue: 'Follow the light.' },
-  { at: .14, name: 'Cold enough to touch', time: '00:10', cue: 'Closer.' },
-  { at: .23, name: 'The can becomes architecture', time: '00:17', cue: 'Something is holding it in.' },
-  { at: .34, name: 'Containment', time: '00:25', cue: 'Keep going.' },
-  { at: .45, name: 'Breach', time: '00:33', cue: 'Containment is a suggestion.' },
-  { at: .52, name: 'The original', time: '00:38', cue: 'Classic / Energy drink' },
-  { at: .62, name: 'Green has teeth', time: '00:46', cue: 'Green Apple / Energy drink' },
-  { at: .71, name: 'Heat, without fire', time: '00:52', cue: 'Ginger Ale / Sparkling mixer' },
-  { at: .79, name: 'Clear the air', time: '00:58', cue: 'Tonic Water / Sparkling mixer' },
-  { at: .87, name: 'The quiet', time: '01:04', cue: 'Let it settle.' },
-  { at: .95, name: 'VOLD remains', time: '01:10', cue: 'No rules. Just VOLD.' },
+  { at: 0, name: 'Stillness', time: '00:00', cue: '' },
+  { at: .06, name: 'Follow the light', time: '00:04', cue: '' },
+  { at: .14, name: 'Cold to the touch', time: '00:10', cue: '' },
+  { at: .23, name: 'Find the centre', time: '00:17', cue: '' },
+  { at: .34, name: 'Pressure', time: '00:25', cue: '' },
+  { at: .45, name: 'Controlled release', time: '00:33', cue: '' },
+  { at: .52, name: 'Cognitive fuel', time: '00:38', cue: 'Tropical Punch / 355 mL' },
+  { at: .62, name: 'Snow', time: '00:46', cue: '' },
+  { at: .71, name: 'Water', time: '00:52', cue: '' },
+  { at: .79, name: 'Terrain', time: '00:58', cue: '' },
+  { at: .87, name: 'Lock in', time: '01:04', cue: '' },
+  { at: .965, name: 'All in', time: '01:12', cue: '' },
 ] as const
 
 export type FilmSignal = { progress: number; velocity: number; visible: boolean }
@@ -18,7 +18,28 @@ export const clamp01 = (n: number) => Math.max(0, Math.min(1, n))
 export const smooth = (a: number, b: number, p: number) => { const t = clamp01((p - a) / (b - a)); return t * t * (3 - 2 * t) }
 export const windowed = (a: number, b: number, c: number, d: number, p: number) => smooth(a, b, p) * (1 - smooth(c, d, p))
 export const shotAt = (p: number) => Math.max(0, SHOTS.findLastIndex(s => p >= s.at))
-export const productAt = (p: number) => p >= .63 && p < .714 ? 1 : p >= .714 && p < .797 ? 2 : p >= .797 && p < .883 ? 3 : 0
+export const environmentAt = (p: number) => p >= .62 && p < .71 ? 0 : p >= .71 && p < .79 ? 1 : p >= .79 && p < .87 ? 2 : -1
+
+// Every optical layer derives from scroll, so reversing is the same edit in reverse.
+export const dewReveal = (p: number) => smooth(.45, .62, p)
+
+// Each title clears before the next enters; a long, still hold gives LOCK IN its weight.
+export function finaleAt(p: number) {
+  return {
+    quiet: windowed(.87, .888, .968, .985, p),
+    lockIn: windowed(.877, .89, .925, .933, p),
+    focz: windowed(.938, .947, .957, .966, p),
+    ending: smooth(.968, .99, p),
+  }
+}
+
+export function worldWeights(p: number): [number, number, number] {
+  const snow = .16 * smooth(.455, .52, p) + .84 * smooth(.59, .65, p)
+  const water = smooth(.696, .733, p)
+  const terrain = smooth(.777, .814, p)
+  const visibility = 1 - smooth(.85, .885, p)
+  return [snow * (1 - water) * visibility, water * (1 - terrain) * visibility, terrain * visibility]
+}
 
 // Nonuniform Hermite interpolation preserves camera velocity across shot boundaries.
 const CAMERA = [
@@ -26,14 +47,16 @@ const CAMERA = [
   [.06, .38, 1.61, 1.04, .04, 1.39, .07, 28],
   [.14, .88, 1.71, 1.25, .04, 1.29, .04, 28],
   [.23, .64, .44, .92, .08, .37, .34, 30],
-  [.34, 1.65, .2, 3.6, 0, .1, 0, 34],
-  [.425, -.2, .1, 5.6, 0, .1, 1.1, 30],
-  [.455, .06, .08, 5.2, 0, .02, 1.1, 32],
-  [.52, 2.35, .9, 6.6, 0, .06, 0, 35],
-  [.62, 1.30, .45, 6.8, 0, -.02, 0, 33],
-  [.71, -2.30, .75, 5.4, 0, .04, 0, 34],
-  [.79, -1.45, 1.5, 5.2, 0, .18, 0, 35],
-  [.87, 1.5, .55, 5.8, 0, .04, 0, 33],
+  [.34, .43, .28, 1.82, .025, .24, .24, 30],
+  [.425, .34, .24, 3.45, .012, .15, .1, 31],
+  [.455, .32, .23, 4.35, 0, .1, .04, 31],
+  [.49, .305, .23, 5.88, 0, .078, .003, 31.8],
+  [.505, .301, .23, 6.065, 0, .075, 0, 32],
+  [.52, .3, .23, 6.1, 0, .075, 0, 32],
+  [.62, .31, .25, 6.18, 0, .075, 0, 32],
+  [.71, .32, .27, 6.22, 0, .075, 0, 32],
+  [.79, .3, .28, 6.26, 0, .075, 0, 32],
+  [.87, .3, .3, 6.35, 0, .075, 0, 32],
   [.95, .7, .4, 6.7, 0, .05, 0, 32],
   [1, .6, .42, 7.4, 0, .1, 0, 32],
 ] as const
