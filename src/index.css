@@ -63,9 +63,8 @@ h2 { color: var(--bone); font-size: clamp(44px,5.5vw,88px); font-weight: 450; le
 .formula-section h2 { font-size: clamp(44px,5vw,76px); margin-bottom: 28px; }
 .label-note { max-width: 310px; font-size: 12px; line-height: 1.65; color: var(--muted); margin-top: 35px; }
 .formula-list { list-style: none; padding: 0; margin: 0; align-self: center; }
-.formula-list li { display: grid; grid-template-columns: 45px 1fr; gap: 12px; align-items: center; padding-block: 23px; border-top: 1px solid var(--line); font-size: clamp(19px,2vw,30px); font-weight: 400; letter-spacing: -.025em; }
+.formula-list li { padding-block: 23px; border-top: 1px solid var(--line); font-size: clamp(19px,2vw,30px); font-weight: 400; letter-spacing: -.025em; }
 .formula-list li:last-child { border-bottom: 1px solid var(--line); }
-.formula-list .mono { color: var(--muted); }
 .launch-section { --bone: #08090a; --secondary: #454a48; --muted: #565c58; --line: rgba(8,9,10,.18); color: var(--ink); background: #e8e6df; display: grid; grid-template-columns: 1fr 1fr; align-items: center; gap: 7vw; padding-block: 130px; }
 .launch-section h2 { margin-bottom: 30px; }
 .launch-card { max-width: 420px; justify-self: end; width: 100%; border-top: 1px solid var(--line); padding-top: 28px; }
@@ -79,12 +78,11 @@ h2 { color: var(--bone); font-size: clamp(44px,5.5vw,88px); font-weight: 450; le
 .faq-section h2 { font-size: clamp(30px,3vw,44px); }
 .faq-list details { border-top: 1px solid var(--line); }
 .faq-list details:last-child { border-bottom: 1px solid var(--line); }
-.faq-list summary { display: grid; grid-template-columns: 28px 1fr 20px; gap: 15px; padding-block: 24px; font-size: 15px; align-items: center; list-style: none; }
+.faq-list summary { display: grid; grid-template-columns: minmax(0,1fr) 20px; gap: 15px; padding-block: 24px; font-size: 15px; align-items: center; list-style: none; }
 .faq-list summary::-webkit-details-marker { display: none; }
-.faq-list .mono { color: var(--muted); font-size: 9px; }
 .faq-plus { font-size: 22px; color: var(--secondary); transition: transform .25s; }
 .faq-list details[open] .faq-plus { transform: rotate(45deg); }
-.faq-list details p { padding: 0 35px 26px 43px; font-size: 14px; line-height: 1.7; color: var(--secondary); }
+.faq-list details p { padding: 0 35px 26px 0; font-size: 14px; line-height: 1.7; color: var(--secondary); }
 .site-footer { border-top: 1px solid var(--line); padding-top: 50px; padding-bottom: 30px; }
 .footer-top, .footer-bottom { display: flex; align-items: center; justify-content: space-between; gap: 20px; color: var(--muted); }
 .footer-top a { min-height: 44px; display: flex; align-items: center; }

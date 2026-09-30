@@ -30,8 +30,8 @@
 .film-kicker { font-family: var(--font-mono); font-size: 10px; letter-spacing: .1em; line-height: 1.7; text-transform: uppercase; color: var(--muted); }
 .film-intro { position: absolute; z-index: 3; left: 6%; right: 6%; top: 50%; transform: translateY(-50%); text-align: center; opacity: var(--intro); pointer-events: none; }
 .film-intro h1 { font-size: clamp(112px,20vw,310px); font-weight: 650; margin: 0 0 28px; }
-.film-intro > p { color: var(--secondary); font-size: 10px; font-weight: 400; letter-spacing: .04em; text-transform: none; }
-.film-intro > p span { color: var(--muted); padding-inline: 10px; }
+.film-intro > p { display: inline-flex; align-items: center; gap: 1.25rem; color: var(--secondary); font-size: 10px; font-weight: 400; letter-spacing: .04em; text-transform: none; }
+.film-intro > p span:last-child { color: var(--muted); }
 .film-scroll { display: block; color: var(--muted); margin-top: 48px; font-size: 20px; line-height: 1; font-weight: 300; }
 .film-product-copy { position: absolute; z-index: 3; left: 7%; top: 45%; max-width: 30%; opacity: var(--product-copy); pointer-events: none; transform: translateY(calc((1 - var(--product-copy)) * 8px)); }
 .film-product-copy > p { font-size: clamp(20px,2.2vw,34px); line-height: 1.2; letter-spacing: -.035em; font-weight: 400; margin-block: 18px 12px; }
@@ -53,10 +53,10 @@
 .chapter-tick { width: 14px; height: 1px; background: rgba(233,234,233,.4); transform-origin: center; transition: background .3s,transform .3s,width .3s; }
 .film-markers button[aria-current] .chapter-tick { background: var(--bone); width: 26px; height: 2px; }
 .film-markers button:hover .chapter-tick,.film-markers button:focus-visible .chapter-tick { background: #fff; transform: scaleX(1.15); }
-.chapter-tooltip { position: absolute; bottom: 52px; left: 0; display: block; white-space: nowrap; font-family: var(--font-mono); font-size: 10px; color: var(--secondary); opacity: 0; translate: 0 4px; transition: opacity .25s,translate .25s; pointer-events: none; }
+.chapter-tooltip { position: absolute; bottom: 52px; left: 0; display: block; white-space: nowrap; font-family: var(--font-sans); font-size: 12px; letter-spacing: -.01em; color: var(--secondary); opacity: 0; translate: 0 4px; transition: opacity .25s,translate .25s; pointer-events: none; }
 .film-markers button:hover .chapter-tooltip,.film-markers button:focus-visible .chapter-tooltip { opacity: 1; translate: 0 0; }
 .film-scene-control { display: none; }
-.film-scene-control select { appearance: none; color: var(--secondary); background: transparent; border: 0; padding: 10px 24px 10px 0; border-radius: 0; font-family: var(--font-mono); font-size: 10px; letter-spacing: .02em; max-width: 240px; min-height: 44px; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8'%3E%3Cpath d='m2 2 4 4 4-4' fill='none' stroke='%238a9092'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right center; }
+.film-scene-control select { appearance: none; color: var(--secondary); background: transparent; border: 0; padding: 10px 24px 10px 0; border-radius: 0; font-family: var(--font-sans); font-size: 12px; font-weight: 450; letter-spacing: -.01em; max-width: 240px; min-height: 44px; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8'%3E%3Cpath d='m2 2 4 4 4-4' fill='none' stroke='%238a9092'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right center; }
 .film-scene-control option { background: var(--ink); color: var(--bone); }
 .film-focus-button { display: grid; place-items: center; width: 44px; height: 44px; padding: 0; border: 0; background: none; color: var(--muted); transition: color .25s; }
 .film-focus-button:hover,.film-focus-button:focus-visible { color: var(--bone); }
@@ -87,7 +87,7 @@
   .film-ending-actions { width: min(240px,100%); gap: 4px; }
   .film-credit { right: 6%; bottom: 86px; font-size: 9px; }
   .film-navigation { left: 6%; bottom: 16px; gap: 16px; }.film-markers { display: none; }.film-scene-control { display: block; }
-  .film-scene-control select { max-width: 220px; font-size: 9px; }
+  .film-scene-control select { max-width: 220px; font-size: 12px; }
   .film-fallback { grid-template-columns: 1fr; padding: 96px 6% 32px; gap: 16px; }.film-fallback img { height: 35svh; width: 100%; object-fit: cover; }.film-fallback h1 { font-size: 17vw; margin-block: 12px; }.film-fallback p { font-size: 12px; margin-bottom: 16px; }
 }
 @media (max-height:600px) and (min-width:760px) {

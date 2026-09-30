@@ -112,7 +112,7 @@ export default function ScrollFilm({ reduced }: { reduced: boolean }) {
 
   return <section id="top" ref={track} className={`film-track${reduced ? ' is-calm' : ''}${unavailable ? ' is-fallback' : ''}`} aria-label="An interactive FOCZ product film">
     <div className={`film-stage${sceneVisible ? ' is-ready' : ''}`} ref={stage}>
-      <div className="film-image">{unavailable ? <div className="film-fallback"><img src="/focz/product.png" alt="FOCZ Tropical Punch energy drink" /><div><h1><Brand /></h1><p>{product.name} / {product.volume}</p><a className="button button-white" href="#formula">Ingredients <Arrow /></a></div></div> : fonts && <SceneLoaderBoundary onUnavailable={onUnavailable}><Suspense fallback={null}><FilmScene signal={signal} interaction={interaction} onFocus={focusSound} reduced={reduced} onReady={onReady} onUnavailable={onUnavailable} /></Suspense></SceneLoaderBoundary>}</div>
+      <div className="film-image">{unavailable ? <div className="film-fallback"><img src="/focz/product.png" alt="FOCZ Tropical Punch energy drink" /><div><h1><Brand /></h1><p>{product.name}<br />{product.volume}</p><a className="button button-white" href="#formula">Ingredients <Arrow /></a></div></div> : fonts && <SceneLoaderBoundary onUnavailable={onUnavailable}><Suspense fallback={null}><FilmScene signal={signal} interaction={interaction} onFocus={focusSound} reduced={reduced} onReady={onReady} onUnavailable={onUnavailable} /></Suspense></SceneLoaderBoundary>}</div>
       {!unavailable && <div className="film-world-image" aria-hidden="true">{worlds.map(item => <div key={item.name} className={`film-world-layer film-world-${item.image}`}><div className="film-world-crop" /></div>)}</div>}
       {!unavailable && <div className="film-intro-backdrop" aria-hidden="true" />}
       <div className="film-vignette" aria-hidden="true" />
@@ -124,7 +124,7 @@ export default function ScrollFilm({ reduced }: { reduced: boolean }) {
       {!unavailable && <>
         <div className="film-intro" aria-hidden={chapter > 0} inert={chapter > 0}>
           <h1><LiquidWordmark disabled={chapter > 0} reduced={reduced} onActivate={focusCan} /></h1>
-          <p className="mono">{product.name} <span aria-hidden="true">/</span> {product.volume}</p>
+          <p className="mono"><span>{product.name}</span><span>{product.volume}</span></p>
           <span className="film-scroll" aria-label={loaded ? 'Scroll to explore' : 'Loading the film'}>{loaded ? '↓' : '·'}</span>
         </div>
         <div className="film-product-copy" aria-hidden={chapter < 6 || chapter > 9}>
@@ -138,8 +138,8 @@ export default function ScrollFilm({ reduced }: { reduced: boolean }) {
         </div>
         <p className="film-credit" aria-hidden={chapter !== 11}>A prototype by insert_name studios</p>
         <nav className="film-navigation" aria-label="Film chapters">
-          <ol className="film-markers">{SHOTS.map((shot, i) => <li key={shot.name}><button type="button" onClick={() => seekChapter(i)} aria-label={`Scene ${i + 1}: ${shot.name}`} aria-current={chapter === i ? 'step' : undefined}><span className="chapter-tick" aria-hidden="true" /><span className="chapter-tooltip" aria-hidden="true">{String(i + 1).padStart(2, '0')} / {shot.name}</span></button></li>)}</ol>
-          <div className="film-scene-control"><label className="sr-only" htmlFor="film-scene">Film scene</label><select id="film-scene" value={chapter} onChange={event => seekChapter(Number(event.target.value))}>{SHOTS.map((shot, i) => <option key={shot.name} value={i}>{String(i + 1).padStart(2, '0')} / {shot.name}</option>)}</select></div>
+          <ol className="film-markers">{SHOTS.map((shot, i) => <li key={shot.name}><button type="button" onClick={() => seekChapter(i)} aria-label={`Go to ${shot.name}`} aria-current={chapter === i ? 'step' : undefined}><span className="chapter-tick" aria-hidden="true" /><span className="chapter-tooltip" aria-hidden="true">{shot.name}</span></button></li>)}</ol>
+          <div className="film-scene-control"><label className="sr-only" htmlFor="film-scene">Film scene</label><select id="film-scene" value={chapter} onChange={event => seekChapter(Number(event.target.value))}>{SHOTS.map((shot, i) => <option key={shot.name} value={i}>{shot.name}</option>)}</select></div>
           <button type="button" className="film-focus-button" aria-label="Focus the can" title="Focus the can" onClick={focusCan} disabled={chapter < 2 || chapter > 9}><FocusIcon /></button>
         </nav>
         <div className="film-progress" aria-hidden="true"><span /></div>

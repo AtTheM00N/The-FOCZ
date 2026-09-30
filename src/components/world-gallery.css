@@ -14,9 +14,9 @@
 .world-card:hover img,.world-card:focus-visible img { transform: scale(1.018); filter: grayscale(1) brightness(1); }
 .world-caption { display: flex; align-items: center; justify-content: space-between; gap: 1rem; min-block-size: 2.75rem; padding-block-start: .75rem; }
 .world-caption h3 { min-inline-size: 0; font-size: clamp(1.125rem,2cqi,1.375rem); line-height: 1.3; letter-spacing: -.03em; font-weight: 450; }
-.world-caption-meta { display: flex; flex-shrink: 0; align-items: center; gap: clamp(.75rem,2cqi,1.25rem); color: var(--muted); }
-.world-caption-meta svg { width: 18px; transition: translate .3s,color .3s; }
-.world-card:hover .world-caption-meta svg,.world-card:focus-visible .world-caption-meta svg { translate: 2px -2px; color: var(--bone); }
+.world-caption-icon { display: flex; flex-shrink: 0; align-items: center; color: var(--muted); }
+.world-caption-icon svg { width: 18px; transition: translate .3s,color .3s; }
+.world-card:hover .world-caption-icon svg,.world-card:focus-visible .world-caption-icon svg { translate: 2px -2px; color: var(--bone); }
 
 /* Arrange only when the section itself has room, including at browser zoom. */
 @container focz-world (min-width:36rem) {

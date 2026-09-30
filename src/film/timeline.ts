@@ -5,7 +5,7 @@ export const SHOTS = [
   { at: .23, name: 'Find the centre', time: '00:17', cue: '' },
   { at: .34, name: 'Pressure', time: '00:25', cue: '' },
   { at: .45, name: 'Controlled release', time: '00:33', cue: '' },
-  { at: .52, name: 'Cognitive fuel', time: '00:38', cue: 'Tropical Punch / 355 mL' },
+  { at: .52, name: 'Cognitive fuel', time: '00:38', cue: 'Tropical Punch 355 mL' },
   { at: .62, name: 'Snow', time: '00:46', cue: '' },
   { at: .71, name: 'Water', time: '00:52', cue: '' },
   { at: .79, name: 'Terrain', time: '00:58', cue: '' },
